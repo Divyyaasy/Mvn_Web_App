@@ -2,25 +2,25 @@ pipeline {
     agent any
 
     tools {
-        jdk 'JDK11'
-        maven 'Maven3'
+        jdk 'JDK11'       // Name of JDK configured in Jenkins
+        maven 'MAVEN3'    // Name of Maven configured in Jenkins
     }
 
     stages {
 
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                git url: 'https://github.com/Divyyaasy/Mvn_Web_App.git'
+                git branch: 'main', url: 'https://github.com/Divyyaasy/Mvn_Web_App.git'
             }
         }
 
-        stage('Clean') {
+        stage('Compile') {
             steps {
-                sh 'mvn clean'
+                sh 'mvn clean compile'
             }
         }
 
-        stage('Test') {
+        stage('Run Unit Tests') {
             steps {
                 sh 'mvn test'
             }
@@ -31,14 +31,15 @@ pipeline {
                 sh 'mvn package'
             }
         }
+
     }
 
     post {
         success {
-            echo '✅ Build + Test + Package SUCCESS'
+            echo '✅ Maven Build Successful! WAR generated in target folder.'
         }
         failure {
-            echo '❌ Pipeline FAILED'
+            echo '❌ Build Failed! Check logs.'
         }
     }
 }
