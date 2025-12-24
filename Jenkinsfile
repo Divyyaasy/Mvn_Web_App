@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        jdk 'JDK11'
-        maven 'MAVEN3'
+        jdk 'C:\\Program Files\\Java\\jdk-17'
+        maven 'Maven 3.9.9'
     }
 
     stages {
@@ -17,19 +17,19 @@ pipeline {
 
         stage('Compile') {
             steps {
-                sh 'mvn clean compile'
+                bat 'mvn clean compile'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn package'
+                bat 'mvn package'
             }
         }
     }
