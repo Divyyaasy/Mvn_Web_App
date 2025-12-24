@@ -1,37 +1,43 @@
 pipeline {
     agent any
 
-    tools {
-        jdk 'JDK17'
-        maven 'MAVEN3'
+    environment {
+        // Set your JDK path
+        JAVA_HOME = '/usr/lib/jvm/java-17-openjdk'   // <-- replace with your JDK path
+        PATH = "${JAVA_HOME}/bin:${env.PATH}"
+
+        // Set your Maven path
+        MAVEN_HOME = '/opt/maven/apache-maven-3.9.9' // <-- replace with your Maven path
+        PATH = "${MAVEN_HOME}/bin:${env.PATH}"
     }
 
     stages {
-        stage('Compile') {
+        stage('Checkout') {
             steps {
-                bat 'mvn clean compile'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                bat 'mvn test'
+                // Checkout code from GitHub
+                git 'https://github.com/Divyyaasy/Mvn_Web_App.git'
             }
         }
 
         stage('Build') {
             steps {
-                bat 'mvn package'
+                // Run Maven build
+                sh 'mvn clean install'
             }
         }
-    }
 
-    post {
-        success {
-            echo '✅ Build Successful'
+        stage('Test') {
+            steps {
+                // Run tests if any
+                sh 'mvn test'
+            }
         }
-        failure {
-            echo '❌ Build Failed'
+
+        stage('Package') {
+            steps {
+                // Package or deploy if needed
+                sh 'mvn package'
+            }
         }
     }
 }
