@@ -1,10 +1,10 @@
 pipeline {
     agent any
 
-    tools {
-        jdk 'C:\\Program Files\\Java\\jdk-17'
-        maven 'Maven 3.9.9'
-    }
+   tools {
+    jdk 'JDK17'
+    maven 'MAVEN3'
+}
 
     stages {
 
