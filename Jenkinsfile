@@ -8,13 +8,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Source Code') {
-            steps {
-                git url: 'https://github.com/Divyyaasy/Mvn_Web_App.git',
-                    branch: 'main'
-            }
-        }
-
         stage('Compile') {
             steps {
                 bat 'mvn clean compile'
